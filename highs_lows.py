@@ -2,7 +2,7 @@ import csv
 import matplotlib.pyplot as plt
 from datetime import datetime
 
-filename = 'data/sitka_weather_2014.csv'
+filename = 'data/death_valley_2014.csv'
 with open(filename) as f:
 	reader = csv.reader(f)
 	header_row = next(reader)  # 读取第一行
@@ -13,10 +13,18 @@ with open(filename) as f:
 	dates, highs, lows = [], [], []
 
 	for row in reader:
-		current_date = datetime.strptime(row[0], '%Y-%m-%d')
-		dates.append(current_date)
-		highs.append(int(row[1]))
-		lows.append(int(row[3]))
+		# 增加数据正确性检查
+		try:
+			current_date = datetime.strptime(row[0], '%Y-%m-%d')
+			high = int(row[1])
+			low = int(row[3])
+		except ValueError:
+			print(current_date, "missing date")
+		else:
+			print(current_date)
+			dates.append(current_date)
+			highs.append(high)
+			lows.append(low)
 
 # 根据数据绘制图形
 fig = plt.figure(dpi=128, figsize=(10, 6))
@@ -30,4 +38,4 @@ fig.autofmt_xdate()
 plt.ylabel(s='Temperatures(F)', fontsize=12)
 plt.tick_params(axis='both', which='major', labelsize=10)
 
-plt.show()
+plt.savefig('highs_lows.png')

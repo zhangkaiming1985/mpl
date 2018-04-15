@@ -27,13 +27,13 @@ plt.savefig('random_walk_visual.png')
 
 
 # 利用pygal可视化
-histogram = pygal.XY()
+scattergram = pygal.XY()
 
-histogram.title = "Random Walk"
+scattergram.title = "Random Walk"
 
 values = []
 for num in range(rw.walk_numbers):
 	values.append((rw.x_value[num], rw.y_value[num]))
 
-histogram.add('step', values)
-histogram.render_to_file('random_walk_visual.svg')
+scattergram.add('step', values)
+scattergram.render_to_file('random_walk_visual.svg')
